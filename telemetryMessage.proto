@@ -1,0 +1,16 @@
+syntax = "proto3";
+package telemetrypackage;
+
+
+message TelemetryMessage{
+     int32 id = 1; 
+     int32 x = 2;
+     int32 y = 3;
+     int32 angle = 4; 
+     string ll = 5; 
+     string ul = 6; 
+     string rl = 7; 
+     string bl = 8;
+     int32 battery = 9;
+     string type = 10;
+}
