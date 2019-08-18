@@ -2,6 +2,14 @@ const dgram = require('dgram');
 const protobuf = require("protobufjs");
 const request = require('request');
 
+// ==============================
+// variables
+// ==============================
+
+const autoStart = false;
+const antsServer = '10.51.128.52'; // localhost
+const uiServer = 'localhost'; // localhost
+
 var TelemetryMessage;
 var totalAnts = 2;
 var totalMoves = 6;
@@ -18,8 +26,14 @@ let counter3 = -1;
 let payloads3 = [];
 let commands3 = [];
 
+// ==============================
+// "main" method
+// ==============================
+
 startupServer();
 
+// ==============================
+// functions
 // ==============================
 
 function startupServer(){
@@ -37,10 +51,11 @@ function startupServer(){
 
     client.on('message', function (message, remote) {   
         console.log('Msg: From: ' + remote.address + ':' + remote.port +' - ' + message);
-        if(message.startsWith('UI:START')){
-            sendCommandsToRealAnts();
+        if((message + '').startsWith('UI:START')){
+            reportCompletedToUi(1); // position the first ant on the grid
+            sendCommandsToRealAnts(); // auto pass the data to the real ants server
         }
-        if(message.startsWith('ANTS:FINISH_')){
+        if((message + '').startsWith('ANTS:FINISH_')){
             reportCompletedToUi(message.replace('ANTS:FINISH_', ''));
         }
     });
@@ -62,7 +77,7 @@ function sendToRealAntServer(ant, command){
     if(command !== 'NULL'){
         request({
         method: 'PUT',
-        url: 'http://localhost:3000/api/ants/' + ant,
+        url: 'http://' + antsServer + ':3000/api/ants/' + ant,
         body: { "antCommandsArr": [command] },
         json: true,
         headers: {
@@ -82,8 +97,10 @@ function initProtoBuf(){
       }
   
       TelemetryMessage = root.lookupType("telemetrypackage.TelemetryMessage");
-      reportCompletedToUi(1); // position the first ant on the grid
-      sendCommandsToRealAnts(); // auto pass the data to the real ants server
+      if(autoStart){
+        reportCompletedToUi(1); // position the first ant on the grid
+        sendCommandsToRealAnts(); // auto pass the data to the real ants server
+      }
     });
   };
 
@@ -117,7 +134,7 @@ function sendTelemetry(payload){
 		const buffer = TelemetryMessage.encode(message).finish();
 
 	    const client = dgram.createSocket('udp4');
-	    client.send(buffer, 41848, 'localhost', (err) => {
+	    client.send(buffer, 41848, uiServer, (err) => {
 		   if (err != null) console.log('Err: ' + err);
 		   client.close();
 	    });
@@ -147,13 +164,13 @@ function initPayloads(){
     commands1.push('NULL');
 
     // 2 (starts outside, moves past ant 1)
-    payloads2.push({id: 1, x: 3, y: 30, angle: 0, ll:'open', ul:'open', rl:'open', bl:'entry', battery:100, type:'scout'});  //1
-    payloads2.push({id: 1, x: 3, y: 29, angle: 0, ll:'open', ul:'open', rl:'open', bl:'open', battery:99, type:'scout'});  //2
-    payloads2.push({id: 1, x: 3, y: 28, angle: 0, ll:'open', ul:'open', rl:'open', bl:'open', battery:98, type:'scout'});  //3
-    payloads2.push({id: 1, x: 3, y: 27, angle: 0, ll:'open', ul:'open', rl:'open', bl:'open', battery:97, type:'scout'});  //4
-    payloads2.push({id: 1, x: 3, y: 26, angle: 0, ll:'open', ul:'wall', rl:'open', bl:'open', battery:96, type:'scout'});  //5
-    payloads2.push({id: 1, x: 3, y: 26, angle: 90, ll:'open', ul:'wall', rl:'open', bl:'open', battery:95, type:'scout'}); //6
-    payloads2.push({id: 1, x: 4, y: 26, angle: 90, ll:'open', ul:'wall', rl:'open', bl:'open', battery:94, type:'scout'}); //7
+    payloads2.push({id: 2, x: 3, y: 30, angle: 0, ll:'open', ul:'open', rl:'open', bl:'entry', battery:100, type:'scout'});  //1
+    payloads2.push({id: 2, x: 3, y: 29, angle: 0, ll:'open', ul:'open', rl:'open', bl:'open', battery:99, type:'scout'});  //2
+    payloads2.push({id: 2, x: 3, y: 28, angle: 0, ll:'open', ul:'open', rl:'open', bl:'open', battery:98, type:'scout'});  //3
+    payloads2.push({id: 2, x: 3, y: 27, angle: 0, ll:'open', ul:'open', rl:'open', bl:'open', battery:97, type:'scout'});  //4
+    payloads2.push({id: 2, x: 3, y: 26, angle: 0, ll:'open', ul:'wall', rl:'open', bl:'open', battery:96, type:'scout'});  //5
+    payloads2.push({id: 2, x: 3, y: 26, angle: 90, ll:'open', ul:'wall', rl:'open', bl:'open', battery:95, type:'scout'}); //6
+    payloads2.push({id: 2, x: 4, y: 26, angle: 90, ll:'open', ul:'wall', rl:'open', bl:'open', battery:94, type:'scout'}); //7
 
     commands2.push('f1');
     commands2.push('f1');
