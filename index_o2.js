@@ -156,7 +156,6 @@ function sendTelemetry(payload){
 // ==============================
 
 function initPayloads(){
-    /*
     // 1 (starts on map and moves to first T junction, then becomes trans)
     payloads1.push({id: 1, x: 2, y: 30, angle: 0, ll:'wall', ul:'open', rl:'open', bl:'entry', battery:100, type:'scout'});  //0 
     payloads1.push({id: 1, x: 2, y: 29, angle: 0, ll:'wall', ul:'open', rl:'open', bl:'open', battery:99, type:'scout'});  //1
@@ -186,58 +185,7 @@ function initPayloads(){
     commands2.push('f1');//4
     commands2.push('r1');//5
     commands2.push('f1');//6
-
-    */
-
-    // the ant starts on map 0,0 and moves to its target
-    let attackAnt = 1;
-    payloads1.push({id: attackAnt, x: 0, y: 0, angle: 0, ll:'wall', ul:'open', rl:'open', bl:'entry', battery:100, type:'scout'});  //1
-    payloads1.push({id: attackAnt, x: 0, y: 1, angle: 0, ll:'wall', ul:'open', rl:'open', bl:'open', battery:100, type:'scout'});  //2
-    payloads1.push({id: attackAnt, x: 0, y: 2, angle: 0, ll:'wall', ul:'open', rl:'open', bl:'open', battery:100, type:'scout'});  //3
-    payloads1.push({id: attackAnt, x: 0, y: 3, angle: 0, ll:'wall', ul:'open', rl:'open', bl:'open', battery:100, type:'scout'});  //4
-
-    payloads1.push({id: attackAnt, x: 0, y: 3, angle: 90, ll:'wall', ul:'open', rl:'open', bl:'open', battery:100, type:'scout'});  //5
-
-    payloads1.push({id: attackAnt, x: 1, y: 3, angle: 90, ll:'open', ul:'open', rl:'open', bl:'open', battery:100, type:'scout'});  //6
-    payloads1.push({id: attackAnt, x: 2, y: 3, angle: 90, ll:'open', ul:'open', rl:'open', bl:'wall', battery:100, type:'scout'});  //7
-    payloads1.push({id: attackAnt, x: 3, y: 3, angle: 90, ll:'open', ul:'open', rl:'open', bl:'wall', battery:100, type:'scout'});  //8
-    payloads1.push({id: attackAnt, x: 4, y: 3, angle: 90, ll:'open', ul:'open', rl:'open', bl:'wall', battery:100, type:'scout'});  //9
-    payloads1.push({id: attackAnt, x: 5, y: 3, angle: 90, ll:'open', ul:'open', rl:'open', bl:'wall', battery:100, type:'scout'});  //10
-    payloads1.push({id: attackAnt, x: 6, y: 3, angle: 90, ll:'open', ul:'open', rl:'open', bl:'open', battery:100, type:'scout'});  //11
-    payloads1.push({id: attackAnt, x: 7, y: 3, angle: 90, ll:'open', ul:'open', rl:'open', bl:'open', battery:100, type:'scout'});  //12
-
-    payloads1.push({id: attackAnt, x: 7, y: 3, angle: 180, ll:'open', ul:'open', rl:'open', bl:'open', battery:100, type:'scout'});  //13
-    
-    payloads1.push({id: attackAnt, x: 7, y: 2, angle: 180, ll:'open', ul:'open', rl:'open', bl:'open', battery:100, type:'scout'});  //14
-    payloads1.push({id: attackAnt, x: 7, y: 1, angle: 180, ll:'open', ul:'open', rl:'open', bl:'open', battery:100, type:'scout'});  //15
-
-    payloads1.push({id: attackAnt, x: 7, y: 1, angle: 90, ll:'open', ul:'open', rl:'open', bl:'open', battery:100, type:'scout'});  //16
-
-    payloads1.push({id: attackAnt, x: 8, y: 1, angle: 90, ll:'open', ul:'open', rl:'exit', bl:'open', battery:100, type:'scout'});  //17
-
-    commands1.push('f1');//1
-    commands1.push('f1');//2
-    commands1.push('f1');//3
-
-    commands1.push('r1');//4
-
-    commands1.push('f1');//5
-    commands1.push('f1');//6
-    commands1.push('f1');//7
-    commands1.push('f1');//8
-    commands1.push('f1');//9
-    commands1.push('f1');//10
-    commands1.push('f1');//11
-
-    commands1.push('r1');//12
-
-    commands1.push('f1');//13
-    commands1.push('f1');//14
-
-    commands1.push('l1');//15
-
-    commands1.push('f1');//16
     
     // total moves
-    totalMoves = payloads1.length;
+    totalMoves = payloads2.length;
 };
